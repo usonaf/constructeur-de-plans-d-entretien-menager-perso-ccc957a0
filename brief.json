@@ -1,5 +1,5 @@
 {
-  "run_id": "run-1780019541635",
+  "run_id": "run-1780020061415",
   "job_index": 1,
   "params": {
     "owner_user_id": "user-1774822953462",
@@ -7,7 +7,7 @@
     "owner_display_name": "Administrator",
     "count": 1,
     "archetype": "generator",
-    "market": "Growth republish",
+    "market": "Générez un calendrier d",
     "language": "fr",
     "country": "FR",
     "brief": "Générez un calendrier d",
@@ -72,7 +72,7 @@
     "archetype": "generator",
     "language": "fr",
     "country": "FR",
-    "market": "Growth republish",
+    "market": "Générez un calendrier d",
     "characteristics": [
       "imported static site",
       "ready file deploy",
