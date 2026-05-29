@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Constructeur de Plans d&#x27;Entretien Ménager Personnalisés</title>
+    <meta name="description" content="Générez un calendrier d">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ctext x='0' y='14' font-size='16'%3E%F0%9F%A7%B9%3C/text%3E%3C/svg%3E">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;600&display=swap');
+
+        :root {
+            --dark-bg: #1c1c1c;
+            --dark-card: #2c2c2c;
+            --accent-color: #7AEC7A;
+            --text-color: #e0e0e0;
+            --light-border: #444;
+            --font-display: 'Montserrat', sans-serif;
+            --font-body: 'Open Sans', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+            margin: 0;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            max-width: 900px;
+        }
+
+        h1 {
+            font-family: var(--font-display);
+            font-size: 2.8em;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        header p {
+            font-size: 1.1em;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+            max-width: 1100px;
+            width: 100%;
+            padding: 25px;
+        }
+
+        @media (min-width: 900px) {
+            .container {
+                grid-template-columns: 2fr 1fr;
+            }
+        }
+
+        .card {
+            background-color: var(--dark-card);
+            border: 1px solid var(--light-border);
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .card h2 {
+            font-family: var(--font-display);
+            color: var(--accent-color);
+            font-size: 1.8em;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-color);
+            font-size: 0.95em;
+        }
+
+        input[type="number"],
+        select,
+        textarea {
+            width: calc(100% - 20px);
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid var(--light-border);
+            border-radius: 5px;
+            background-color: #383838;
+            color: var(--text-color);
+            font-size: 1em;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+
+        .checkbox-group {
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: var(--accent-color);
+            color: var(--dark-bg);
+            border: none;
+            padding: 15px 25px;
+            border-radius: 5px;
+            font-size: 1.1em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #5dcb5d;
+            transform: translateY(-2px);
+        }
+
+        #tool-result {
+            background-color: #242424;
+            border: 1px solid var(--light-border);
+            border-radius: 8px;
+            padding: 30px;
+            font-size: 1em;
+            line-height: 1.8;
+            white-space: pre-wrap;
+            min-height: 200px;
+        }
+
+        #tool-result h3 {
+            font-family: var(--font-display);
+            color: var(--accent-color);
+            font-size: 1.4em;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        #tool-result ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        #tool-result li {
+            background-color: #3a3a3a;
+            padding: 10px 15px;
+            border-left: 3px solid var(--accent-color);
+            margin-bottom: 8px;
+            border-radius: 4px;
+        }
+
+        .cta-section {
+            background-color: var(--dark-card);
+            border: 1px solid var(--light-border);
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+            margin-top: 30px;
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .cta-section h2 {
+            font-family: var(--font-display);
+            color: var(--accent-color);
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            font-size: 1.1em;
+            margin-bottom: 30px;
+        }
+
+        .cta-buttons button {
+            width: auto;
+            min-width: 200px;
+            margin: 0 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 50px;
+            color: #ccc;
+            font-size: 0.9em;
+            max-width: 900px;
+        }
+
+        footer h2 {
+            font-family: var(--font-display);
+            color: var(--accent-color);
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        footer ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        footer li {
+            background-color: #3a3a3a;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            color: #aaa;
+        }
+    </style>
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://constructeur-de-plans-d-entretien-menager-perso-ccc957a0.onrender.com">
+    <meta property="og:title" content="Constructeur de Plans d&#x27;Entretien Ménager Personnalisés">
+    <meta property="og:description" content="Générez un calendrier d">
+    <meta property="og:url" content="https://constructeur-de-plans-d-entretien-menager-perso-ccc957a0.onrender.com">
+    <meta property="og:type" content="website">
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Constructeur de Plans d'Entretien Ménager Personnalisés", "description": "Générez un calendrier d", "url": "https://constructeur-de-plans-d-entretien-menager-perso-ccc957a0.onrender.com", "applicationCategory": "UtilityApplication", "operatingSystem": "Web Browser"}</script>
+</head>
+<body data-site-slug="constructeur-de-plans-d-entretien-menager-perso-ccc957a0" data-runtime-mode="document_generator" data-site-slug="constructeur-de-plans-d-entretien-menager-perso-ccc957a0" data-runtime-mode="imported_static">
+    <header>
+        <h1>Simplifiez l'Entretien de Votre Foyer</h1>
+        <p>Générez un calendrier d'entretien hebdomadaire, mensuel et saisonnier adapté à votre domicile et à vos habitudes de vie. Transformez une corvée en plaisir organisé.</p>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <h2>Votre Plan sur Mesure</h2>
+            <form id="tool-form">
+                <label for="room-count">Nombre de pièces principales (hors SDB/WC) :</label>
+                <input type="number" id="room-count" value="3" min="1" max="10" required>
+
+                <label for="occupants">Nombre d'occupants :</label>
+                <input type="number" id="occupants" value="2" min="1" max="8" required>
+
+                <label for="pets">Avez-vous des animaux de compagnie ?</label>
+                <select id="pets">
+                    <option value="none">Non</option>
+                    <option value="one">Un</option>
+                    <option value="multiple">Plusieurs</option>
+                </select>
+
+                <label for="house-type">Type de logement :</label>
+                <select id="house-type">
+                    <option value="apartment">Appartement</option>
+                    <option value="house">Maison</option>
+                </select>
+
+                <label for="garden">Avez-vous un jardin ou balcon conséquent ?</label>
+                <select id="garden">
+                    <option value="no">Non</option>
+                    <option value="yes">Oui</option>
+                </select>
+
+                <div class="checkbox-group">
+                    <label>Préférences spécifiques :</label>
+                    <div><input type="checkbox" id="dust-sensitive" value="poussiere"> Sensible à la poussière</div>
+                    <div><input type="checkbox" id="kids" value="enfants"> Enfants en bas âge</div>
+                    <div><input type="checkbox" id="allergies" value="allergies"> Allergies connues</div>
+                </div>
+                
+                <button type="submit" id="tool-submit">Générer Mon Calendrier</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <h2>Votre Calendrier Personnalisé</h2>
+            <div id="tool-result">
+                <h3 id="result-headline">Votre routine d'entretien apparaîtra ici.</h3>
+                <p>Remplissez les informations à gauche et cliquez sur "Générer Mon Calendrier" pour découvrir un plan adapté à votre domicile.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="cta-section">
+        <h2>Passez à la Vitesse Supérieure</h2>
+        <p>Vous aimez votre nouveau plan ? Découvrez des outils et astuces pour rendre l'entretien encore plus simple et agréable.</p>
+        <div class="cta-buttons">
+            <button data-affiliate-slot="smart-cleaning-tools">Découvrir les Outils Malins</button>
+            <button data-affiliate-slot="eco-friendly-products">Produits Éco-responsables</button>
+        </div>
+    </div>
+
+    <section class="growth-anchor-block" data-growth-affiliate="anchor" style="margin:20px 0 0;padding:14px 16px;border:1px solid rgba(127,127,127,.18);border-radius:16px;background:rgba(127,127,127,.06)"><p class="growth-anchor-copy" style="margin:0;line-height:1.7">Dans le prolongement de Constructeur de Plans d'Entretien Ménager Personnalisés, tu peux également regarder <a href="https://aerobet-fr.casino/">Aerobet Avis</a> pour situer cette option dans un cadre plus large.</p></section><footer>
+        <h2>Recherches Fréquentes pour un Foyer Impeccable</h2>
+        <p>Trouvez les meilleures pratiques pour l'organisation et l'entretien de votre maison.</p>
+        <ul>
+            <li>planning ménage semaine</li>
+            <li>calendrier nettoyage maison pdf</li>
+            <li>routine ménage rapide</li>
+            <li>organisation tâches ménagères famille</li>
+            <li>astuces entretien appartement</li>
+            <li>produits ménagers écologiques</li>
+            <li>comment garder sa maison propre</li>
+            <li>fréquence nettoyage salle de bain</li>
+            <li>entretien cuisine facile</li>
+            <li>désencombrer sa maison étapes</li>
+            <li>guide ménage printemps</li>
+            <li>checklist ménage fin de bail</li>
+        </ul>
+    </footer>
+
+    <script>
+        document.getElementById('tool-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const roomCount = parseInt(document.getElementById('room-count').value);
+            const occupants = parseInt(document.getElementById('occupants').value);
+            const pets = document.getElementById('pets').value;
+            const houseType = document.getElementById('house-type').value;
+            const garden = document.getElementById('garden').value;
+            const dustSensitive = document.getElementById('dust-sensitive').checked;
+            const kids = document.getElementById('kids').checked;
+            const allergies = document.getElementById('allergies').checked;
+
+            let weeklyTasks = [];
+            let monthlyTasks = [];
+            let seasonalTasks = [];
+
+            // Base weekly tasks
+            weeklyTasks.push("Aspirer/laver les sols des pièces de vie");
+            weeklyTasks.push("Nettoyer les surfaces de cuisine (plan de travail, évier)");
+            weeklyTasks.push("Nettoyer les WC et lavabos");
+            weeklyTasks.push("Vider les poubelles");
+            weeklyTasks.push("Ranger et organiser les zones encombrées");
+            weeklyTasks.push("Laver le linge et le plier");
+
+            // Adjustments based on inputs
+            if (roomCount > 3 || occupants > 2) {
+                weeklyTasks.push("Passer l'aspirateur plus fréquemment dans les zones de passage");
+            }
+            if (pets !== 'none') {
+                weeklyTasks.push("Aspirer les poils d'animaux (canapés, tapis)");
+            }
+            if (kids) {
+                weeklyTasks.push("Ranger les jouets et désinfecter les surfaces fréquemment touchées");
+            }
+            if (dustSensitive || allergies) {
+                weeklyTasks.push("Dépoussiérer les surfaces hautes et basses (meubles, étagères)");
+            }
+            
+            // Monthly tasks
+            monthlyTasks.push("Nettoyer les miroirs et vitres");
+            monthlyTasks.push("Dépoussiérer les luminaires et plinthes");
+            monthlyTasks.push("Nettoyer la douche/baignoire en profondeur");
+            monthlyTasks.push("Laver les tapis ou paillassons");
+            monthlyTasks.push("Nettoyer les appareils électroménagers (micro-ondes, lave-vaisselle filtre)");
+            if (houseType === 'house') {
+                monthlyTasks.push("Vérifier et nettoyer les bouches d'aération");
+            }
+
+            // Seasonal tasks (every 3 months, for simplicity)
+            seasonalTasks.push("Nettoyage en profondeur des placards de cuisine");
+            seasonalTasks.push("Laver les rideaux ou stores");
+            seasonalTasks.push("Nettoyer les fenêtres intérieures et extérieures");
+            seasonalTasks.push("Nettoyage des murs (points d'accès, interrupteurs)");
+            seasonalTasks.push("Vérifier et nettoyer les joints de salle de bain");
+            if (garden === 'yes') {
+                seasonalTasks.push("Entretien du mobilier de jardin/balcon");
+            }
+
+            let resultHtml = '<h3>Votre Calendrier d\'Entretien Personnalisé :</h3>';
+
+            resultHtml += '<h4>Chaque Semaine :</h4><ul>';
+            weeklyTasks.forEach(task => {
+                resultHtml += `<li>${task}</li>`;
+            });
+            resultHtml += '</ul>';
+
+            resultHtml += '<h4>Chaque Mois :</h4><ul>';
+            monthlyTasks.forEach(task => {
+                resultHtml += `<li>${task}</li>`;
+            });
+            resultHtml += '</ul>';
+
+            resultHtml += '<h4>Chaque Saison (3 Mois) :</h4><ul>';
+            seasonalTasks.forEach(task => {
+                resultHtml += `<li>${task}</li>`;
+            });
+            resultHtml += '</ul>';
+            
+            resultHtml += '<p><em>Ce plan est une suggestion, ajustez-le à votre rythme !</em></p>';
+
+            document.getElementById('tool-result').innerHTML = resultHtml;
+        });
+    </script>
+<div id="qa-smoke-result" hidden></div>
+<script id="farmbuilder-affiliate-helper">
+(function () {
+  window.__UTILITY_AFFILIATE_MAP = window.__UTILITY_AFFILIATE_MAP || {};
+  document.addEventListener("click", function (event) {
+    const target = event.target.closest("[data-affiliate-slot]");
+    if (!target) return;
+    const slot = target.getAttribute("data-affiliate-slot");
+    const href = window.__UTILITY_AFFILIATE_MAP[slot];
+    if (!href) return;
+    if (target.tagName && target.tagName.toLowerCase() === "a") {
+      target.setAttribute("href", href);
+      target.removeAttribute("rel");
+      return;
+    }
+    event.preventDefault();
+    window.open(href, "_blank");
+  }, true);
+})();
+</script>
+<script id="farmbuilder-functional-qa">
+(function () {
+  function marker() {
+    let node = document.getElementById("qa-smoke-result");
+    if (node) return node;
+    node = document.createElement("div");
+    node.id = "qa-smoke-result";
+    node.hidden = true;
+    document.body.appendChild(node);
+    return node;
+  }
+
+  let qaFinished = false;
+  let qaWatchdog = null;
+
+  function normalize(text) {
+    return String(text || "").replace(/\s+/g, " ").trim();
+  }
+
+  function findForm() {
+    return document.getElementById("tool-form") || document.querySelector("form");
+  }
+
+  function findResult() {
+    return (
+      document.getElementById("tool-result") ||
+      document.querySelector("[data-result]") ||
+      document.querySelector(".tool-result, .result-card, .result, .results, .output, .preview, .diagnostic, .analysis")
+    );
+  }
+
+  function primaryAction(form) {
+    if (!form) return null;
+    return (
+      document.getElementById("tool-submit") ||
+      form.querySelector("#tool-submit") ||
+      form.querySelector("[data-primary-action]") ||
+      form.querySelector("button[type=submit]") ||
+      form.querySelector("button") ||
+      form.querySelector("input[type=submit]")
+    );
+  }
+
+  function resultSignature(node) {
+    if (!node) return "";
+    const text = normalize(node.textContent);
+    const html = normalize(node.innerHTML).slice(0, 600);
+    return `${text}||${html}`;
+  }
+
+  function resultHeadline(node) {
+    if (!node) return "";
+    const heading = node.querySelector("h1, h2, h3, strong, b");
+    return normalize(heading ? heading.textContent : "");
+  }
+
+  function sampleText(field) {
+    const key = `${field.id || ""} ${field.name || ""} ${field.placeholder || ""}`.toLowerCase();
+    if (/email/.test(key)) return "bonjour@example.com";
+    if (/url|site|website|lien/.test(key)) return "https://example.com/offre-solaire";
+    if (/phone|tel|mobile/.test(key)) return "0612345678";
+    if (/ville|city|localisation|location|region|departement|postal/.test(key)) return "Paris";
+    if (/orientation/.test(key)) return "sud";
+    if (/keyword|theme|topic|sujet|subject/.test(key)) return "energie solaire domestique";
+    if (/titre|title/.test(key)) return "Simulateur solaire maison";
+    if (/nom|name|project/.test(key)) return "Projet Horizon";
+    if (/description|notes|content|message/.test(key)) return "Maison individuelle exposee sud avec toiture exploitable.";
+    return field.placeholder || "France";
+  }
+
+  function sampleNumber(field) {
+    const key = `${field.id || ""} ${field.name || ""}`.toLowerCase();
+    if (/inclinaison|angle|slope/.test(key)) return "30";
+    if (/surface|size|m2|sqm/.test(key)) return "28";
+    if (/annee|year/.test(key)) return "2024";
+    if (/prix|price|budget|cost|amount|montant/.test(key)) return "12000";
+    const min = Number(field.min || "");
+    const max = Number(field.max || "");
+    if (Number.isFinite(min) && Number.isFinite(max) && max >= min) {
+      return String(Math.min(max, Math.max(min, min + Math.round((max - min) * 0.35))));
+    }
+    if (Number.isFinite(min)) return String(Math.max(min, 12));
+    if (Number.isFinite(max)) return String(Math.min(max, 12));
+    return field.value || "12";
+  }
+
+  function applySample(field) {
+    const tag = (field.tagName || "").toLowerCase();
+    const type = (field.type || "").toLowerCase();
+    if (field.disabled) return;
+    if (type === "hidden" || type === "submit" || type === "button" || type === "reset" || type === "image" || type === "file") {
+      return;
+    }
+    const currentValue = normalize(field.value);
+    if (tag === "select") {
+      if (currentValue) return;
+      const option = Array.from(field.options || []).find((item) => item.value && !item.disabled) || field.options[0];
+      if (option) field.value = option.value;
+      return;
+    }
+    if (type === "checkbox") {
+      if (field.checked) return;
+      field.checked = true;
+      return;
+    }
+    if (type === "radio") {
+      if (field.checked) return;
+      field.checked = true;
+      return;
+    }
+    if (type === "date") {
+      if (currentValue) return;
+      field.value = "2026-03-01";
+      return;
+    }
+    if (type === "email") {
+      if (currentValue) return;
+      field.value = "bonjour@example.com";
+      return;
+    }
+    if (type === "url") {
+      if (currentValue) return;
+      field.value = "https://example.com/offre-solaire";
+      return;
+    }
+    if (type === "tel") {
+      if (currentValue) return;
+      field.value = "0612345678";
+      return;
+    }
+    if (type === "color") {
+      if (currentValue) return;
+      field.value = "#2f855a";
+      return;
+    }
+    if (type === "number" || type === "range") {
+      if (currentValue) return;
+      field.value = sampleNumber(field);
+      return;
+    }
+    if (currentValue) return;
+    field.value = sampleText(field);
+  }
+
+  function stamp(status, detail, headline, primary) {
+    if (qaFinished) return;
+    qaFinished = true;
+    if (qaWatchdog) {
+      window.clearTimeout(qaWatchdog);
+      qaWatchdog = null;
+    }
+    const node = marker();
+    node.dataset.status = status;
+    node.dataset.mode = "native-form";
+    node.dataset.detail = detail || "";
+    node.dataset.headline = headline || "";
+    node.dataset.primary = primary || "";
+    node.dataset.viewport = window.innerWidth <= 640 ? "mobile" : "desktop";
+    window.setTimeout(function () {
+      try {
+        window.stop();
+      } catch (_error) {}
+    }, 0);
+  }
+
+  function installModalGuards() {
+    const noop = function () {};
+    const approve = function () { return true; };
+    const empty = function () { return ""; };
+    try { window.alert = noop; } catch (_error) {}
+    try { window.confirm = approve; } catch (_error) {}
+    try { window.prompt = empty; } catch (_error) {}
+  }
+
+  function triggerAction(form, action) {
+    try {
+      if (typeof form.requestSubmit === "function") {
+        form.requestSubmit(action || undefined);
+        return;
+      }
+    } catch (_error) {}
+    if (action && typeof action.click === "function") {
+      action.click();
+      return;
+    }
+    form.dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
+  }
+
+  function inspectResult(before, attemptsLeft) {
+    const result = findResult();
+    if (!result) {
+      stamp("fail", "La zone de resultat est introuvable.", "");
+      return;
+    }
+    const after = resultSignature(result);
+    const text = normalize(result.textContent);
+    if (after && after !== before && text.length >= 24) {
+      const primary = result.querySelector("a[href], button[data-href], [data-primary-url]") || document.querySelector("#tool-result a[href]");
+      stamp("pass", "Le formulaire natif a mis a jour la zone de resultat.", resultHeadline(result), primary ? (primary.getAttribute("href") || primary.getAttribute("data-primary-url") || "") : "");
+      return;
+    }
+    if (attemptsLeft > 0) {
+      window.setTimeout(function () {
+        inspectResult(before, attemptsLeft - 1);
+      }, 250);
+      return;
+    }
+    stamp("fail", "La zone de resultat n'a pas renvoye de contenu exploitable.", resultHeadline(result));
+  }
+
+  function runSmoke() {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("__qa") !== "functional") return;
+    qaWatchdog = window.setTimeout(function () {
+      stamp("fail", "QA smoke timed out before the page reported a usable result.", "");
+    }, 7000);
+    const form = findForm();
+    if (!form) {
+      stamp("fail", "Le formulaire principal est introuvable.", "");
+      return;
+    }
+    const result = findResult();
+    const before = resultSignature(result);
+    installModalGuards();
+    try {
+      form.querySelectorAll("input, select, textarea").forEach(applySample);
+    } catch (error) {
+      stamp("fail", error && error.message ? `QA smoke sample failed: ${error.message}` : "QA smoke sample failed before submit.", "");
+      return;
+    }
+    const action = primaryAction(form);
+    try {
+      triggerAction(form, action);
+    } catch (error) {
+      stamp("fail", error && error.message ? `QA smoke submit failed: ${error.message}` : "QA smoke submit failed.", "");
+      return;
+    }
+    inspectResult(before, 10);
+  }
+
+  window.addEventListener("error", function (event) {
+    const message = event && event.message ? event.message : "JavaScript runtime error during QA smoke.";
+    stamp("fail", `QA smoke JS error: ${message}`, "");
+  }, { once: true });
+
+  window.addEventListener("unhandledrejection", function (event) {
+    const reason = event && event.reason;
+    const detail = typeof reason === "string"
+      ? reason
+      : reason && reason.message
+        ? reason.message
+        : "Unhandled promise rejection during QA smoke.";
+    stamp("fail", `QA smoke rejection: ${detail}`, "");
+  }, { once: true });
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", function () {
+      window.setTimeout(runSmoke, 60);
+    }, { once: true });
+  } else {
+    window.setTimeout(runSmoke, 60);
+  }
+})();
+</script>
+<script id="farmbuilder-affiliate-runtime">
+(function () {
+  document.addEventListener("click", function (event) {
+    const node = event.target.closest("[data-affiliate-link]");
+    if (!node) return;
+    const url = node.getAttribute("data-affiliate-link");
+    if (!url) return;
+    window.setTimeout(function () {
+      try {
+        window.open(url, "_blank");
+      } catch (error) {
+        window.location.href = url;
+      }
+    }, 80);
+  }, true);
+})();
+</script>
+</body>
+</html>
